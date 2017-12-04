@@ -1,43 +1,43 @@
 # A10:2017 Insufficient Logging and Monitoring
 
-| Threat agents/Attack vectors | Security Weakness           | Impacts               |
+| ผู้โจมตี/ช่องทาง | จุดอ่อนด้านความปลอดภัย           | ผลกระทบ               |
 | -- | -- | -- |
-| Access Lvl : Exploitability 2 | Prevalence 3 : Detectability 1 | Technical 2 : Business |
-| Exploitation of insufficient logging and monitoring is the bedrock of nearly every major incident. Attackers rely on the lack of monitoring and timely response to achieve their goals without being detected. | This issue is included in the Top 10 based on an [industry survey](https://owasp.blogspot.com/2017/08/owasp-top-10-2017-project-update.html). One strategy for determining if you have sufficient monitoring is to examine the logs following penetration testing. The testers' actions should be recorded sufficiently to understand what damages they may have inflicted. | Most successful attacks start with vulnerability probing. Allowing such probes to continue can raise the likelihood of successful exploit to nearly 100%. In 2016, identifying a breach took an [average of 191 days](https://www-01.ibm.com/common/ssi/cgi-bin/ssialias?htmlfid=SEL03130WWEN&) – plenty of time for damage to be inflicted. |
+| การเข้าถึงช่องโหว่ : ความยากในการโจมตี 2 | แพร่กระจายง่าย 3 : ตรวจพบได้ง่าย 1 | ผลกระทบทางเทคนิค 2 : ผลกระทบทางธุรกิจ |
+| ผลกระทบของการเก็บ log และการเฝ้าระวังที่ไม่มีประสิทธิภาพมักจะเป็นปราการด่านสุดท้ายของทุกๆเหตุการณ์ร้ายแรงแทบจะทุกเหตุการณ์. ผู้โจมตีมักอาศัยความไม่พร้อมของการเฝ้าระวังและใช้เวลาในการตอบโต้ที่ยาวนานเพื่อให้สำเร็จตามเป้าหมายที่ต้องการโดยไม่ถูกตรวจจับ. | ปัญหานี้ถูกนำเข้ามาใน Top 10 [industry survey](https://owasp.blogspot.com/2017/08/owasp-top-10-2017-project-update.html). ยุทธวิธีหนึ่งสำหรับการแก้ไข เพื่อให้คุณมีการเฝ้าระวังที่มีประสิทธิภาพ คือการตรวจสอบ logs ตามด้วยการทดสอบเจาะระบบ(penetration testing). การกระทำใดๆของผู้ทดสอบควรถูกบันทึกอย่างดีเพื่อให้เข้าใจถึงผลกระทบที่อาจเกิดขึ้นได้. | การโจมตีที่ประสบผลสำเร็จส่วนใหญ่เริ่มต้นด้วยการทดสอบหาช่องโหว่. การอนุญาตให้กระทำการตรวจสอบดังกล่าวจะนำไปสู่การเพิ่มโอกาสของความสำเร็จในการโจมตีให้ใกล้เคียงถึง 100%. ในปี 2016, พบว่าใช้เวลาถึง [ประมาณ 191 วัน](https://www-01.ibm.com/common/ssi/cgi-bin/ssialias?htmlfid=SEL03130WWEN&) ถึงจะทราบว่าระบบถูกเจาะ – เป็นเวลาที่มากพอที่จะส่งผลรุนแรง. |
 
-## Is the Application Vulnerable?
+## แอพพลิเคชั่นนี้มีช่องโหว่หรือไม่?
 
-Insufficient logging, detection, monitoring and active response occurs any time:
+ความไม่มีประสิทธิในเรื่องการเก็บ log, การตรวจจับ, การเฝ้าระวัง และ การพร้อมตอบโต้ เกิดขึ้นได้ทุกเมื่อ:
 
-* Auditable events, such as logins, failed logins, and high-value transactions are not logged.
-* Warnings and errors generate no, inadequate, or unclear log messages.
-* Logs of applications and APIs are not monitored for suspicious activity.
-* Logs are only stored locally.
-* Appropriate alerting thresholds and response escalation processes are not in place or effective.
-* Penetration testing and scans by [DAST](https://www.owasp.org/index.php/Category:Vulnerability_Scanning_Tools) tools (such as [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project)) do not trigger alerts.
-* The application is unable to detect, escalate, or alert for active attacks in real time or near real time.
+* Audit events ใดๆ, เช่น การเข้าสู่ระบบ, การเข้าสู่ระบบไม่สำเร็จ, และการดำเนินการใดๆที่รุนแรงหรือมีค่ามาก ไม่ได้ถูก log ไว้.
+* ไม่มีการสร้าง log Warnings และ errors หรือไม่เพียงพอหรือเป็นข้อความที่ไม่ชัดเจน
+* Log ของแอพพลิเคชั่นและ API ใดๆไม่ถูกเฝ้าระวังเพื่อหาพฤติกรรมที่ผิดปกติ.
+* Log อยู่เก็บภายในเครื่องเท่านั้น
+* ไม่มี/ไม่มีประสิทธิในการกำหนดระดับการแจ้งเตือนอย่างเหมาะสมและแผนการดำเนินการจัดการเหตุที่มีระดับความสำคัญมากขึ้น
+* ไม่มีการแจ้งเตือนเมื่อกระทำการทดสอบเจาะระบบและการใช้งานเครื่องมือตรวจสอบหาช่องโหว่([DAST](https://www.owasp.org/index.php/Category:Vulnerability_Scanning_Tools)) (เช่น [OWASP ZAP](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) เป็นต้น).
+* แอพพลิเคชั่นไม่สามารถตรวจสอบ, เพิ่มระดับความสำคัญ, หรือแจ้งเตือนเมื่อเหตุการณ์โจมตีเกิดขึ้น ในระดับเดียวกับการเกิดเหตุ (real time) หรือใกล้เคียงเวลาการเกิดเหตุ (nearly real time.
 
-You are vulnerable to information leakage if you make logging and alerting events visible to a user or an attacker (see A3:2017-Sensitive Information Exposure).
+หากการเก็บ log และการแจ้งเตือนถูกเห็นโดยผู้ใช้งานทั่วไปหรือผู้โจมตีจะทำให้ระบบเกิดมีช่องโหว่ข้อมูลรั่วไหลได้ (ดูข้อมูลเพิ่มเติมที่ A3:2017-Sensitive Information Exposure).
 
-## How To Prevent
+## ป้องกันอย่างไร
 
-As per the risk of the data stored or processed by the application:
+แต่ละความเสี่ยงของการเก็บข้อมูลหรือขั้นตอนของที่กระทำในแต่ละแอพพลิเคชั่น:
 
-* Ensure all login, access control failures, and server-side input validation failures can be logged with sufficient user context to identify suspicious or malicious accounts, and held for sufficient time to allow delayed forensic analysis.
-* Ensure that logs are generated in a format that can be easily consumed by a centralized log management solutions.
-* Ensure high-value transactions have an audit trail with integrity controls to prevent tampering or deletion, such as append-only database tables or similar.
-* Establish effective monitoring and alerting such that suspicious activities are detected and responded to in a timely fashion.
-* Establish or adopt an incident response and recovery plan, such as [NIST 800-61 rev 2](https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final) or later.
+* ทำให้แน่ใจว่ารายละเอียดของผู้ใช้งานในการเข้าสู่ระบบใดๆ, การเข้าถึงระบบใดๆที่ล้มเหลว, และการตรวจสอบข้อมูลที่นำเข้าข้อมูลใดๆที่ล้มเหลว ถูกเก็บ log ทั้งหมดนั้นดีพอ เพื่อตรวจสอบหาผู้ใช้งานใดๆที่มีพฤติกรรมผิดปกติหรือทำให้ระบบเกิดความเสียหาย และการควบคุมเวลาให้เพียงพอต่อการกระทำ forensic analysis.
+* ทำให้แน่ใจว่า log ทั้งหมดถูกสร้างในรูปแบบที่ง่ายต่อการนำเข้าสู่การเก็บ log แบบรวมศูนย์(centralized log management solutions).
+* ทำให้แน่ใจว่าการดำเนินงานใดๆที่สำคัญมีร่องรายให้ตรวจสอบได้ พร้อมกับมีการควบคุมความถูกต้องของข้อมูลเพื่อป้องกันการเปลี่ยนแปลงหรือการลบทิ้ง, เช่น การอนุญาตให้นำข้อมูลเข้าสู่ระบบ table ภายใน database เท่านั้น ไม่สามารถกระทำสิ่งอื่นๆได้ เป็นต้น
+* สร้างระบบการเฝ้าระวังและแจ้งเตือนอย่างมีประสิทธิภาพ เช่น เมื่อมีเหตุการณ์ผิดปกติเกิดขึ้นจะต้องตรวจพบได้และสามารถตอบสนองในเวลาที่ใกล้เคียงกับการเกิดขึ้น เป็นต้น
+* สร้างหรือนำแผนการตอบสนองเหตุการณ์ที่มีผลกระทบกับระบบ รวมถึงแผนการนำระบบกลับคืนสู่สภาวะปกติ เช่น [NIST 800-61 rev 2](https://csrc.nist.gov/publications/detail/sp/800-61/rev-2/final) เป็นต้น
 
-There are commercial and open source application protection frameworks such as [OWASP AppSensor](https://www.owasp.org/index.php/OWASP_AppSensor_Project), web application firewalls such as [ModSecurity with the OWASP ModSecurity Core Rule Set](https://www.owasp.org/index.php/Category:OWASP_ModSecurity_Core_Rule_Set_Project), and log correlation software with custom dashboards and alerting. 
+มีเครื่องมือหรือแอพพลิเคชั่นทางด้านโครงข่ายการป้องกัน ทั้งแบบที่เป็นการค้าขายและ open source เช่น [OWASP AppSensor](https://www.owasp.org/index.php/OWASP_AppSensor_Project), web application firewalls เช่น [ModSecurity with the OWASP ModSecurity Core Rule Set](https://www.owasp.org/index.php/Category:OWASP_ModSecurity_Core_Rule_Set_Project), และเครื่องมือหาความสัมพันธ์ของ log ด้วย dashboard ที่ปรับแต่งได้และแจ้งเตือนได้.
 
-## Example Attack Scenarios
+## ตัวอย่างเหตุการณ์การโจมตี
 
-**Scenario #1**: An open source project forum software run by a small team was hacked using a flaw in its software. The attackers managed to wipe out the internal source code repository containing the next version, and all of the forum contents. Although source could be recovered, the lack of monitoring, logging or alerting led to a far worse breach. The forum software project is no longer active as a result of this issue.
+**เหตุการณ์ที่ #1**: แอพพลิเคชั่น Open Source สำหรับการอภิปราย (An open source project forum software) ถูกใช้งานในทีมเล็กๆทีมหนึ่งถูกแฮ็คผ่านทางช่องโหว่ของอพพลิเคชั่น. ผู้โจมตีกระทำการลบ source code ที่ถูกเก็บไว้ในแหล่งข้อมูลภายใน ซึ่ง source code ดังกล่าวเป็น source code ของแอพพลิเคชั่นรุ่นถัดไป, รวมถึงเนื้อหาภายใน forum นั้นทั้งหมดถูกลบด้วยเช่นกัน. ถึงแม้ว่า source code สามารถที่จะกู้กลับมาได้, แต่เนื่องด้วยขาดการเฝ้าระวัง, การเก็บ log หรือการแจ้งเตือน นำไปสู่การถูกเจาะที่ร้ายแรง. ทำให้ระบบ forum ดังกล่าวถูกระงับการใช้งาน
 
-**Scenario #2**: An attacker uses scans for users using a common password. They can take over all accounts using this password. For all other users, this scan leaves only one false login behind. After some days, this may be repeated with a different password.
+**เหตุการณ์ที่ #2**: ผู้โจมตีทดสอบหาผู้ใช้งานที่ใช้รหัสผ่านที่เดาได้ง่ายหรือรหัสผ่านทั่วไป. ทำให้ผู้โจมตีสามารถยึด account ของผู้ใช้งานเหล่านั้นโดยใช้รหัสผ่านเหล่านั้นได้. สำหรับผู้ใช้งานอื่นๆ, การทดสอบดังกล่าวทำให้เกิด log การเข้าระบบที่ผิดพลาด. และแน่นอนว่าผู้โจมตีอาจกลับมาโจมตีอีกได้,โดยการเดารหัสผ่านที่แตกต่างไปจากเดิม.
 
-**Scenario #3**: A major US retailer reportedly had an internal malware analysis sandbox analyzing attachments. The sandbox software had detected potentially unwanted software, but no one responded to this detection. The sandbox had been producing warnings for some time before the breach was detected due to fraudulent card transactions by an external bank.
+**เหตุการณ์ที่ #3**: มีการรายงานว่าผู้ขายปลีกรายใหญ่ในสหรัญอเมริกาส่วนใหญ่มีระบบสำหรับการตรวจสอบไฟล์ที่ถูกแนบส่งเข้ามา โดยระบบการตรวจสอบดังกล่าวพบแอพพลิเคชั่นประสงค์ร้ายแต่กลับไม่มีผู้ใดตอบสนองกับการแจ้งเตือนนั้น ระบบการตรวจสอบมักมีการแจ้งเตือนก่อนที่การถูกแฮ็คจะเกิดขึ้นเสมอ โดยการถูกแฮ็คมักถูกตรวจพบเมื่อมีการนำบัตรเครดิตไปใช้งานอย่างผิดกฏหมายเรียบร้อยแล้ว
 
 ## References
 
