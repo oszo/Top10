@@ -1,43 +1,43 @@
-# A3:2017 Sensitive Data Exposure
+# A3:2017 การเปิดเผยข้อมูลที่มีความละเอียดอ่อน
 
-| Threat agents/Attack vectors | Security Weakness | Impacts |
+| ผู้โจมตี/ช่องทาง | จุดอ่อนด้านความปลอดภัย | ผลกระทบ |
 | -- | -- | -- |
-| Access Lvl : Exploitability 2 | Prevalence 3 : Detectability 2 | Technical 3 : Business |
-| Rather than directly attacking crypto, attackers steal keys, execute man-in-the-middle attacks, or steal clear text data off the server, while in transit, or from the user’s client, e.g. browser. A manual attack is generally required. Previously retrieved password databases could be brute forced by Graphics Processing Units (GPUs). | Over the last few years, this has been the most common impactful attack. The most common flaw is simply not encrypting sensitive data. When crypto is employed, weak key generation and management, and weak algorithm, protocol and cipher usage is common, particularly for weak password hashing storage techniques. For data in transit, server side weaknesses are mainly easy to detect, but hard for data at rest. | Failure frequently compromises all data that should have been protected. Typically, this information includes sensitive personal information (PII) data such as health records, credentials, personal data, and credit cards, which often require protection as defined by laws or regulations such as the EU GDPR or local privacy laws. |
+| การเข้าถึงช่องโหว่ : ความยากในการโจมตี 2 | แพร่กระจายง่าย 3 : ตรวจพบได้ง่าย 2 | Technical 3 : Business |
+| แทนที่ผู้โจมตีจะมุ่งโจมตีโดยตรงไปที่วิธีการทางวิทยาการรหัสลับ แต่ผู้โจมตีจะหันไปใช้ วิธีการอื่นๆ เช่น การขโมยคีย์ , การใช้คนกลางดำเนินการแทน (man-in-the middle) หรือ การขโมยข้อมูลที่ไม่ได้ถูกเข้ารหัส ( clear text ) ที่มีการส่งไปยังหรือออกมาจาก เซิรฟเวอร์ กับ ฝั่งไคลเอนต์ซึ่งก็คือเบราวเซอร์ของผู้ใช้งาน ในการลงมือโจมตีโดยทั่วไปแล้วมีความต้องการ รหัสผ่านที่ได้ถูกผ่านการเรียกค้นค่าออกมาจาก ฐานข้อมูล ซึ่งก็สามารถทำได้โดยใช้ วิธีแบบเดาสุ่มค่า (brute forced) โดยการประมวลผล ด้วยหน่วยประมวลผลกราฟิค (GPU:Graphics Processing Units). | ในช่วงไม่กี่ปีที่ผ่านมา การโจมตีชนิดนี้ได้ส่งผลกระทบเป็นอย่างมาก โดยข้อบกพร่อง ที่พบมากที่สุดคือ ปราศจากการเข้ารหัสให้กับข้อมูลที่มีความละเอียดอ่อน ครั้นเมื่อใช้งานวิธีทางวิทยาการรหัสลับแล้ว ก็ยังมีความเปราะบางในเรื่อง การสร้างและการจัดการคีย์ , ความเปราะบางในเรื่องขั้นตอนวิธี โปรโตคอล และ ไซเฟอร์ เป็นเรื่องที่เกิดขึ้นได้เสมอ โดยเฉพาะ อย่างยิ่ง เทคนิคในการเก็บรักษา รหัสผ่านที่ได้ถูกทำการแปลงรหัสแบบทางเดียว (hashing) แล้วแต่่ไม่มีความแข็งแรงพอ  สำหรับข้อมูลในระหว่างการส่ง จุดอ่อนของฝั่งเซิร์ฟเวอร์สามารถตรวจจับได้โดยง่าย แต่ว่าใน ส่วนอื่นๆนั้นทำได้ยาก | บ่อยครั้งที่ความล้มเหลวมาจากการละเลยในการป้องกันข้อมูลทั้งหลาย ทั้งๆที่ควรจะต้องได้รับป้องกัน โดยทั่วไปแล้ว ข้อมูลสารสนเทศ นั้นจะประกอบไปด้วย ข้อมูลส่วนบุคคลที่สำคัญ(PII) เช่น ผลการบันทึกข้อมูล ทางสุขภาพ ข้อมูลการรับรองตัวตน  ข้อมูลส่วนบุคคลและบัตรเครดิต ซึ่งมักต้องได้รับการ คุ้มครองตามกฎหมายหรือข้อบังคับเช่น EU GDPR หรือ กฏหมายคุ้มครองข้อมูลส่วนบุคคล |
 
-## Is the Application Vulnerable?
+## แอ็พพลิเคชันที่มีช่องโหว่หรือไม่?
 
-The first thing is to determine the protection needs of data in transit and at rest. For example, passwords, credit card numbers, health records, personal information and business secrets require extra protection, particularly if that data falls under privacy laws, e.g. EU's General Data Protection Regulation (GDPR), or regulations, e.g. financial data protection such as PCI Data Security Standard (PCI DSS). For all such data:
+สิ่งแรกคือ การกำหนดข้อมูลอะไร ที่มีความจำเป็นต้องทำการป้องกัน ในระหว่างการส่งข้อมูลและส่วนต่างๆ ตัวอย่างเช่น รหัสผ่าน , เลขที่บัตรเครดิต , บันทึกประวัติข้อมูลทางสุขภาพ , ข้อมูลส่วนบุคคล และรวมถึง ความลับทางธุรกิจ ยิ่งต้องการการป้องกันมากเป็นพิเศษ โดยเฉพาะอย่างยิ่ง หากเป็นข้อมูลที่อยู่ภายใต้ กฏหมายคุ้มครองข้อมูลส่วนบุคคล เช่น EU's General Data Protection Regulation (GDPR) หรือ ที่เป็นกฏข้อบังคับ เช่น เรื่องการคุ้มครองข้อมูลทางการเงิน เช่น PCI Data Security Standard ( PCI DSS)  อย่างเช่น
 
-* Is any data transmitted in clear text? This concerns protocols such as HTTP, SMTP, and FTP. External internet traffic is especially dangerous. Verify all internal traffic e.g. between load balancers, web servers, or back-end systems.
-* Are any old or weak cryptographic algorithms used either by default or in older code? 
-* Are default crypto keys in use, weak crypto keys generated or re-used, or is proper key management or rotation missing?
-* Is encryption not enforced, e.g. are any user agent (browser) security directives or headers missing?
-* Does the user agent (e.g. app, mail client) not verify if the received server certificate is valid?
+* ข้อมูลที่ส่งออกไป อยู่ในรูปแบบข้อมูลที่ไม่ได้ถูกเข้ารหัส (clear text)หรือไม่ ซึ่งในส่วนนี้จะ เกี่ยวข้องกับโปรโตคอลหลายตัว เช่น HTTP, SMTP, and FTP โดยเฉพาะหากออกไปภายนอก เข้าสู่การจราจรทางอินเทอร์เน็ตแล้วก็จะยิ่งมีอันตราย
+* กระบวนวิธีการทางวิทยาการรหัสลับที่ใช้อยู่ล้าสมัยหรือเปราะบาง หรือไม่ ทั้งในส่วน ที่เป็นการใช้ งานเป็นวิธีหลัก และรวมถึงในส่วนของโค๊ดดิ้งงานเก่าๆที่เคยทำไปแล้วแต่ยังคงนำโปรแกรมเหล่านั้น มาใช้งานอยู่
+* คีย์ที่ผ่านกระบวนการทางวิทยาการรหัสลับ (crypto keys) ที่ใช้เป็นหลักนั้นได้ถูกนำมาสร้าง crypto key ที่เปราะบาง หรือ มีการนำมาคีย์มาใช้งานซ้ำ หรือ มีการจัดการคีย์ที่เหมาะสม หรือ การหมุนเวียนคีย์ที่ผิดพลาด หรือไม่
+* การไม่ได้ถูกบังคับให้เข้ารหัส เช่น ผู้ใช้งานคนใหน (ใช้งานผ่านเบราว์เซอร์) มีการตั้งค่าทาง security หรือ ใช้ headers ที่ผิดพลาด
+* การใช้งานของ user agent (เช่น พวก app หรือ mail client ) จะไม่ทำการพิสูจน์หรือไม่ ถ้าได้รับ ใบรับรองที่ถูกต้องจากเซริฟเวอร์
 
-See ASVS [Crypto (V7)](https://www.owasp.org/index.php/ASVS_V7_Cryptography), [Data Protection (V9)](https://www.owasp.org/index.php/ASVS_V9_Data_Protection) and [SSL/TLS (V10)](https://www.owasp.org/index.php/ASVS_V10_Communications).
+ดูเพิ่มเติมที่ ASVS [Crypto (V7)](https://www.owasp.org/index.php/ASVS_V7_Cryptography), [Data Protection (V9)](https://www.owasp.org/index.php/ASVS_V9_Data_Protection) and [SSL/TLS (V10)](https://www.owasp.org/index.php/ASVS_V10_Communications).
 
-## How To Prevent
+## เราจะมีวิธีป้องกันได้อย่างไร
 
-Do the following, at a minimum, and consult the references:
+ให้ดำเนินการขั้นตอนต่อไปนี้ ซึ่งจะเป็นเพียงการดำเนินการขั้นต่ำสุด และ ให้ทำการศึกษาจากแหล่งอ้างอิงร่วมด้วย:
 
-* Classify data processed, stored or transmitted by an application. Identify which data is sensitive according to privacy laws, regulatory requirements, or business needs.
-* Apply controls as per the classification.
-* Don't store sensitive data unnecessarily. Discard it as soon as possible or use PCI DSS compliant tokenization or even truncation. Data that is not retained cannot be stolen.
-* Make sure to encrypt all sensitive data at rest.
-* Ensure up-to-date and strong standard algorithms, protocols, and keys are in place; use proper key management.
-* Encrypt all data in transit with secure protocols such as TLS with perfect forward secrecy (PFS) ciphers, cipher prioritization by the server, and secure parameters. Enforce encryption using directives like HTTP Strict Transport Security (HSTS).
-* Disable caching for response that contain sensitive data.
-* Store passwords using strong adaptive and salted hashing functions with a work factor (delay factor), such as [Argon2](https://www.cryptolux.org/index.php/Argon2), [scrypt](https://wikipedia.org/wiki/Scrypt), [bcrypt](https://wikipedia.org/wiki/Bcrypt) or [PBKDF2](https://wikipedia.org/wiki/PBKDF2).
-* Verify independently the effectiveness of configuration and settings.
+* ให้ดำเนินการรจัดจำแนกหมวดหมู่ข้อมูล โดยแบ่งเป็น ข้อมูลที่ได้ถูกประมวลผลแล้ว , ข้อมูลที่ได้ ถูกจัดเก็บแล้ว , หรือข้อมูลที่ได้ถูกส่งออกไปแล้ว โดยโปรแกรมประยุกต์ ทั้งนี้ให้มีการระบุชี้เฉพาะเจาะจง ไปเลยว่าข้อมูลใดเป็นข้อมูลที่มีความละเอียดอ่อน ที่เป็นไปตามกฏหมายคุ้มครองข้อมูลส่วนบุคคล, กฏข้อบังคับ หรือ ความต้องการทางธุรกิจ
+* ให้มีการบังคับใช้ การควบคุมตามที่ได้มีการจัดจำแนกหมวดหมู่ข้อมูลเอาไว้แล้วนั้น
+* อย่าเก็บข้อมูลสำคัญที่มีความละเอียดอ่อนเอาไว้ โดยที่ไม่ได้คำนึงถึงความจำเป็น โดยให้ดำเนินการกำจัดทิ้งไปโดยเร็วที่สุดเท่าทีจะเป็นไปได้ หรือ ให้มีการใช้งาน token ที่เป็นไปตามข้อกำหนด PCI DSS หรือ แม้แต่การตัดข้อมูลออกเป็นท่อนๆ หากไม่มีการสะสมข้อมูลเอาไว้ก็จะไม่ถูกขโมยได้
+* ให้มั่นใจว่าได้เข้ารหัสข้อมูลสำคัญที่ละเอียดอ่อนทั้งหมดไว้แล้ว
+* ต้องมั่นใจว่า ได้มีการนำ ข้ันตอนวิธี โปรโตคอล และคีย์ ที่มีมาตรฐานแข็งแกร่ง,ทันสมัย มาใช้พร้อมกับการจัดกาคีย์ได้อย่างที่เหมาะสม
+* ให้ดำเนินการเข้ารหัสข้อมูลทั้งหมด ที่จะถูกส่งผ่านไปกับโปรโตคอลนิรภัย เข่น TLS ด้วย cipher ที่มี่คุณสมบัติแบบ perfect forward secrecy (PFS) ( ที่ให้ความมั่นใจว่า คีย์ที่ใช้ในการเข้ารหัสไปแล้วในอดีต หากในอนาคตคีย์ดังกล่าวถูกเปิดเผยขึ้นมา คีย์นั้น จะไม่สามารถนำกลับมาใช้ในการถอดรหัสข้อมูลในอดีตนั้นได้อีกต่อไป), cipher ที่มี การจัดลำดับการถูกใช้งานโดยเครื่องเซิรฟเวอร์ และ ค่าพารามิเตอร์ที่กำหนดความปลอดภัย ให้ทำการบังคับให้มีการเข้ารหัส ภายใต้ข้อกำหนด HTTP Strict Transport Security (HSTS).
+* ให้ทำการปิดการใช้แคช ที่มีไว้สำหรับการตอบสนองต่อข้อมูลที่ละเอียดอ่อน
+* ให้ทำการจัดเก็บรหัสผ่าน ที่ผ่านการดำเนินการ adaptive ( เป็นการปรับเปลี่ยนองค์ประกอบ ในการเข้ารหัส password ให้สามารถแปรผันด้วยองค์ประกอบทางเวลา ) และ ค่า salt ที่ได้ถูกทำการแปลงรหัสด้วยการใช้ฟังก์ชั่น hashing ที่จะมีต้องใข้งานร่วมกับองค์ประกอบอื่น ร่วมด้วย (เช่น องค์ประกอบ ที่ทำให้เกิดการล่าช้าลง delay factor ) ตัวอย่างเข่น [Argon2](https://www.cryptolux.org/index.php/Argon2), [scrypt](https://wikipedia.org/wiki/Scrypt), [bcrypt](https://wikipedia.org/wiki/Bcrypt) หรือ [PBKDF2](https://wikipedia.org/wiki/PBKDF2).
+* ให้มีทำการตรวจพิสูจน์ ถึงความมีประสิทธิผลในการกำหนดค่าและการตั้งค่า แยกออกมาต่างหาก
 
-## Example Attack Scenarios
+## ตัวอย่าง สถานการณ์การโจมตี
 
-**Scenario #1**: An application encrypts credit card numbers in a database using automatic database encryption. However, this data is automatically decrypted when retrieved, allowing an SQL injection flaw to retrieve credit card numbers in clear text. 
+**สถานการณ์ที่ #1**: แอปพลิเคชันหนึ่งที่มีการเข้ารหัสข้อมูลหมายเลขบัตรเครดิต ที่จะบันทึก ลงไปยังในฐานข้อมูล โดยใช้การเข้ารหัสฐานข้อมูลแบบอัตโนมัติ อย่างไรก็ตามข้อมูลนี้ ก็จะ ถูกถอดรหัสโดยอัตโนมัติเมื่อถูกเรียกข้อมูลออกมา จึงทำให้เกิด SQL injection ซึ่งเป็น ช่องโหว่ ทำให้่สามารถดึงข้อมูลหมายเลขบัตรเครดิตได้ ในสภาพที่ปราศจากการเข้ารหัส (clear text)
 
-**Scenario #2**: A site doesn't use or enforce TLS for all pages or supports weak encryption. An attacker monitors network traffic  (e.g. at an insecure wireless network), downgrades connections from HTTPS to HTTP, intercepts requests, and steals the user's session cookie. The attacker then replays this cookie and hijacks the user's (authenticated) session, accessing or modifying the user's private data. Instead of the above they could alter all transported data, e.g. the recipient of a money transfer.
+**สถานการณ์ที่ #2**: เว๊ปไซต์ที่ไม่ได้ใช้หรือบังคับให้ใช้ TLS กับเพจทุกหน้า หรือ มีการใช้งานการเข้ารหัสที่ไม่แข็งแกร่งพอ ผู้โจมตีซึ่งเฝ้าติดตามการจราจในระบบเครือข่าย (เช่นที่เครือข่ายไร้สายที่ไม่ปลอดภัย) , การปรับลดระดับการเชื่อมต่อจาก HTTPS ไปเป็น HTTP , การดักขโมยคุ๊กกี้ของผู้ใช้งานที่อยู่ในเซสชั่นหนึ่ง โดยที่ผู้โจมตีจะมีการใช้งานคุกกี้ดังกล่าว เพื่อทำการสวมรอยเซสชั่นที่ผู้ใช้งานกำลังใช้งานอยู่ เพื่อเข้าใช้งานหรือปรับแก้ไขข้อมูลส่วนบุคคล หรือไม่ก็เข้าดำเนินการเปลี่ยนแปลงข้อมูลที่กำลังถูกส่งทั้งหมด เช่น ผู้ขอรับโอนเงิน
 
-**Scenario #3**: The password database uses unsalted or simple hashes to store everyone's passwords. A file upload flaw allows an attacker to retrieve the password database. All the unsalted hashes can be exposed with a rainbow table of pre-calculated hashes. Hashes generated by simple or fast hash functions may be cracked by GPUs, even if they were salted.
+**สถานการณ์ที่ #3**: ฐานข้อมูลของรหัสผ่าน ที่ไม่ได้ใช้ salted หรือ ใช้กระบวนการ hashes อย่างง่าย เพื่อเก็บรหัสผ่านของทุกคน ช่องโหว่ของการอัปโหลดไฟล์จะช่วยให้ผู้โจมตีสามารถ ทำการดึงรหัสผ่านจากฐานข้อมูล  การสร้าง hashing ที่ไม่มีการกำหนดค่า salted เอาไว้ ก่อนการคำนวณค่า hashes สามารถถูกเปิดเผยค่าได้ด้วยการใช้ rainbow table ในขณะที่ ในการสร้าง hash หากสร้างจากฟังก์ชั่นอย่างง่าย หรือ มีการคำนวนประมวล อย่างรวบรัดแล้ว แฮชที่ถูกสร้างขึ้น ก็อาจจะถูกแกะออกมาได้ โดยการใช้งาน GPU ถึงแม้ว่าจะมี กำหนด salted เอาไว้แล้วก็ตาม
 
 ## References
 
